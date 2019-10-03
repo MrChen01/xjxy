@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyu.xjxy.dao.EmployeeDao">
+    <resultMap type="com.wyu.xjxy.entity.Employee" id="empResultMap" >
+        <id property="id" column="id"></id>
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="race" column="race"/>
+        <result property="education" column="education"/>
+        <result property="speciality" column="speciality"/>
+        <result property="hobby" column="hobby"/>
+    </resultMap>
+    <select id="selectEmpBypage" resultMap="empResultMap">
+		select id,name,address,phone,email,race,education,speciality,hobby from employee_inf
+		limit #{currentpage},#{pagesize};
+	</select>
+
+    <select id="findAll" resultMap="empResultMap">
+		select id,name,address,phone,email,race,education,speciality,hobby from employee_inf
+	</select>
+
+    <select id="selectTotal" resultType="int">
+		select count(*) from employee_inf;
+	</select>
+    <delete id="DeleteEmp" parameterType="int">
+        delete from employee_inf where id=#{id}
+    </delete>
+    <update id="updateEmp" parameterType="com.wyu.xjxy.entity.DeptInf">
+		update employee_inf set
+		name=#{name},address=#{address} ,phone=#{phone},email=#{email},race=#{race},education=#{education}
+		,speciality=#{speciality},hobby=#{hobby}
+		where
+		id=#{id};
+	</update>
+    <delete id="deleteEmpById" parameterType="int">
+		delete from employee_inf where id=#{id}
+	</delete>
+    <sql id="include">
+
+    </sql>
+    <insert id="insertEmp">
+		INSERT INTO employee_inf(id,dept_id,job_id,name,card_id,address,phone,
+                email,race,education,speciality,hobby)
+                 VALUES (DEFAULT, 6, 1,#{name},'123456789012345678',#{address},#{phone},#{email},
+                 #{race},#{education},#{speciality},#{hobby})
+	</insert>
+</mapper>

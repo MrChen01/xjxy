@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyu.xjxy.dao.StudentDao">
+    <resultMap type="com.wyu.xjxy.entity.Student" id="stuResultMap" >
+        <id property="id" column="id"/>
+        <result property="number" column="number"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+		<result property="classinfo" column="classinfo"/>
+		<result property="remark" column="remark"/>
+    </resultMap>
+    <select id="selecctById" parameterType="int" resultType="com.wyu.xjxy.entity.Student">
+		select * from student where id=#{id}
+	</select>
+    <select id="selectByNameAndPass" resultType="int">
+		select count(1) from student where username=#{username} and password=#{password}
+	</select>
+    <select id="selectAll" resultMap="stuResultMap">
+		select id,number,username,password,classinfo,question,answer from student
+	</select>
+    <insert id="insertStudent" parameterType="com.wyu.xjxy.entity.Student">
+		insert into
+		student(number,username,password,classinfo)values(#{number},#{username},#{password},#{classinfo})
+	</insert>
+    <delete id="deleteStudent" parameterType="String">
+		delete from student where number=#{number}
+	</delete>
+
+    <select id="selectBypage" resultMap="stuResultMap">
+		select id,number,username,password,classinfo from student limit #{currentpage},#{pagesize}
+	</select>
+
+    <select id="getTotal" resultType="int">
+		select count(*) from student;
+	</select>
+
+    <update id="updateStudent" parameterType="com.wyu.xjxy.entity.Student">
+		update student set username
+		=#{username},password=#{password},classinfo=#{classinfo} where
+		number=#{number};
+	</update>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyu.xjxy.dao.DeptInfDao">
+	<resultMap type="com.wyu.xjxy.entity.DeptInf" id="DeptResultMap" >
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="remark" column="remark"/>
+	</resultMap>
+    <select id="selectAll" resultMap="DeptResultMap">
+		select * from dept_inf
+	</select>
+    <select id="selectDeptBypage"  resultMap="DeptResultMap">
+		select
+		* from dept_inf limit #{currentpage},#{pagesize};
+	</select>
+    <select id="selectTotal" resultType="int">
+		select count(*) from dept_inf;
+	</select>
+
+    <delete id="deleteDeptById" parameterType="int">
+		delete from dept_inf where id=#{id}
+	</delete>
+    <insert id="insertDept">
+		insert into
+		dept_inf(name,remark)values(#{name},#{remark})
+	</insert>
+
+    <update id="updateDept" parameterType="com.wyu.xjxy.entity.DeptInf">
+		update dept_inf set
+		name=#{name},remark=#{remark} where
+		id=#{id};
+	</update>
+</mapper>
